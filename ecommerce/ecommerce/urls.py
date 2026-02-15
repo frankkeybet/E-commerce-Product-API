@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
+from product.views import CreateUserView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('product/', include('product.urls')),
+    path('user/token',TokenObtainPairView.as_view()),
+    path('user/token/refresh',TokenRefreshView.as_view()),
+    path('user/create',CreateUserView.as_view())
     
 ]
