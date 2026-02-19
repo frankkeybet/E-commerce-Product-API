@@ -74,6 +74,11 @@ class CategoryView(generics.RetrieveUpdateDestroyAPIView):
    serializer_class= CategorySerializer
    lookup_field= 'pk'
 
+   def get_permissions(self):
+        if self.request.method in ["PUT", "PATCH", "DELETE"]:
+            return [IsAuthenticated()]
+        return [AllowAny()]
+
 class ProductListView(generics.ListCreateAPIView):
    queryset=Product.objects.all()
    serializer_class=ProductSerializer
