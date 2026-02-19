@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view
+#from django.shortcuts import render
+#from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import  Product ,Category 
 from .serializers import ProductSerializer ,CategorySerializer,UserSerializer
@@ -99,6 +99,15 @@ class ProductListView(generics.ListCreateAPIView):
       else:
          return serializer.errors()
       
+class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+   queryset = Product.objects.all()
+   serializer_class = ProductSerializer
+   lookup_field = "pk"
+
+   def get_permissions(self):
+        if self.request.method in ["PUT", "PATCH", "DELETE"]:
+            return [IsAuthenticated()]
+        return [AllowAny()]      
 
 
 

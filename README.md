@@ -55,3 +55,28 @@ Django REST Framework (DRF)
 django-filter
 DRF SearchFilter & OrderingFilter
 Token Authentication 
+
+## Recent Updates(19th Feb) (CRUD Completion)
+
+The API has been improved to support full CRUD functionality for both Products and Categories.
+
+
+### ✅ Product CRUD Updates
+- Added `ProductDetailView` to support:
+  - Retrieve a single product
+  - Update a product
+  - Delete a product
+
+- Permissions updated:
+  - Anyone can view products (GET)
+  - Only authenticated users can create/update/delete products
+
+## Updated Endpoints
+### Products
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/products/` | List all products |
+| POST | `/products/` | Create product (Auth required) |
+| GET | `/products/<id>/` | Retrieve product |
+| PUT/PATCH | `/products/<id>/` | Update product (Auth required) |
+| DELETE | `/products/<id>/` | Delete product (Auth required) |
