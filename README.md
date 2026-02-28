@@ -1,82 +1,172 @@
-# E-commerce-Product-API
-Model created:: Product and Category
-Serializers created:: ProductSerializer, CategorySerializer
-Views:
-       Product_list(GET,POST)
-       Product_detail(GET,PUT,DELETE)
-       Category_list(GET,POST)
-URLS: path=>product and category urls
+Ecommerce Product API
+## Project Overview
 
-# Update done on 15th
-Implimented the cors,permission,jwt and cors=>default auth and permission classes
-created UserSerializer to definenusername and password and kwargs permission.
+Ecommerce Product API is a RESTful backend application built using Django 6 and Django REST Framework (DRF).
 
-Refactored the categoryView to use generic classes CategoryListView & CreateUserView with updated permissions
-Updated urls to include create user,token and token refresh
+The API is designed to manage products in an e-commerce platform, allowing authenticated users to create, update, and delete products, while unauthenticated users can view and search available products.
 
-Tested the authenticated views using token on postman to access products
- 
+This project demonstrates real-world backend development skills including:
 
-# Update done on 17th
+RESTful API design
+JWT authentication
+Token-based security
+Filtering and search
+Pagination
+CRUD operations
+User registration and authentication
 
-Implimented custom Filters for price and quantity and inbuilt django filters for product category by category_id,name and time created.
-Tested the search Filter using products added via postman.
+## Tech Stack
 
-# Created the CategoryView: Endpoints
-GET /categories/<id>/
-PUT /categories/<id>/
-DELETE /categories/<id>/
+Framework: Django 6
+API Framework: Django REST Framework
+Authentication: JWT & Token Authentication
+Database: SQLite
+Language: Python
 
-# Description:
-Allows retrieving a single category by ID
-Updating a category
-Deleting a category
+## Authentication & Permissions
 
-# List Products / Create Product Endpoints
-GET /products/
-POST /products/
-# Description
-GET returns all products (public access)
-POST creates a new product (authentication required)
- 
- # Filtering, Searching & Ordering (Products)
-# Filter by Category
-GET /products/?category_id=1
-# Search by Product Name
-GET /products/?search=iphone
-# Order by Created Date
-GET /products/?ordering=created_at
-# Descending order:
-GET /products/?ordering=-created_at
+The API implements secure authentication using:
+JWT Authentication
+Token Authentication
 
-# Technologies Used
-Django
-Django REST Framework (DRF)
-django-filter
-DRF SearchFilter & OrderingFilter
-Token Authentication 
+Authentication Endpoints:
 
-## Recent Updates(19th Feb) (CRUD Completion)
+Method	Endpoint	Description
+POST	/login	Obtain JWT access & refresh token
+POST	/token/refresh	Refresh JWT token
+POST	/register	Register a new user
 
-The API has been improved to support full CRUD functionality for both Products and Categories.
+## Access Control
 
+✅ Unauthenticated users can:
+View products
+Search products
+Filter products
 
-### ✅ Product CRUD Updates
-- Added `ProductDetailView` to support:
-  - Retrieve a single product
-  - Update a product
-  - Delete a product
+🔒 Only authenticated users can:
+Create products
+Update products
+Delete products
+Manage categories
 
-- Permissions updated:
-  - Anyone can view products (GET)
-  - Only authenticated users can create/update/delete products
+## Database Models
+🗂 Category Model
+Field	Type
+name	CharField (max_length=100)
 
-## Updated Endpoints
-### Products
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/products/` | List all products |
-| POST | `/products/` | Create product (Auth required) |
-| GET | `/products/<id>/` | Retrieve product |
-| PUT/PATCH | `/products/<id>/` | Update product (Auth required) |
-| DELETE | `/products/<id>/` | Delete product (Auth required) |
+📦 Product Model
+Field	Type
+name	CharField (max_length=100, required)
+description	TextField
+price	DecimalField (max_digits=10, decimal_places=2, required)
+quantity	IntegerField (required)
+category_id	IntegerField (nullable)
+image	URLField (nullable)
+created_at	DateTimeField (auto_now_add=True)
+updated_at	DateTimeField (auto_now=True)
+
+## 🌐 API Endpoints
+📦 Product Endpoints
+Method	 Endpoint	         Description	                   Auth Required
+GET	    /product/	          List all products (Paginated)	  ❌
+POST  	/product/	          Create new product	            ✅
+GET	    /product/<id>/     	Retrieve product by ID        	❌
+PUT   	/product/<id>/	    Update product	                ✅
+DELETE	/product/<id>/	    Delete product	                ✅
+
+🗂 Category Endpoints
+Method	     Endpoint	       Description	         Auth Required
+GET	       /category/	        List categories	      ❌
+POST     	/category/	        Create category	      ✅
+GET	      /category/<id>/	    Retrieve category	    ❌
+PUT	      /category/<id>/	    Update category	      ✅
+DELETE  	/category/<id>/	    Delete category	      ✅
+
+Password-reset
+Method	     Endpoint	       Description	         Auth Required
+PUT      /reset_password/      reset password         ✅
+
+{
+    "old_password": "your_current_password",
+    "new_password": "your_new_password"
+}
+## 🔎 Search & Filtering
+
+The API supports advanced product querying:
+
+🔍 Search
+.Search by product name
+.Partial match supported
+
+Example:
+
+GET /product/?search=phone
+
+## 🎯 Filtering
+
+.Filter by category
+.Filter by price range
+
+Examples:
+GET /product/?category=1
+GET /product/?min_price=100&max_price=1000
+
+## 📄 Pagination
+
+Product listing is paginated to improve performance when handling large datasets.
+
+Example:
+
+GET /product/?page=2
+
+## 👤 User Management
+
+User Registration
+JWT Login
+Token Refresh
+Default Django User Model used
+
+## ⚙️ Setup Instructions
+1️⃣ Clone Repository
+git clone https://github.com/frankkeybet/E-commerce-Product-API.git
+cd E-commerce-Product-API
+2️⃣ Create Virtual Environment
+python -m venv env
+source env/bin/activate  # On Windows: env\Scripts\activate
+3️⃣ Install Dependencies
+pip install -r requirements.txt
+4️⃣ Run Migrations
+python manage.py migrate
+5️⃣ Create Superuser (Optional)
+python manage.py createsuperuser
+6️⃣ Start Development Server
+python manage.py runserver
+
+API will be available at:
+
+http://127.0.0.1:8000/
+
+## 🧪 Testing
+You can test the API using:
+
+Postman
+cURL
+Browser (for GET requests)
+DRF Browsable API
+
+## 🚀 Deployment Status
+
+❌ Not yet deployed
+
+Currently running in local development environment
+
+## Database: SQLite
+
+## 🔮 Future Improvements
+
+Implement ForeignKey relationship for Category instead of IntegerField
+Add Stock auto-reduction when order is placed
+Deploy to production (Render / Heroku / PythonAnywhere)
+Add product image upload instead of URL
+Implement order management system
+Add role-based permissions (Admin / Manager)
