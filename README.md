@@ -156,9 +156,8 @@ DRF Browsable API
 
 ## 🚀 Deployment Status
 
-❌ Not yet deployed
-
-Currently running in local development environment
+Deployed on render
+https://e-commerce-product-api-12.onrender.com/
 
 ## Database: SQLite
 
@@ -166,7 +165,6 @@ Currently running in local development environment
 
 Implement ForeignKey relationship for Category instead of IntegerField
 Add Stock auto-reduction when order is placed
-Deploy to production (Render / Heroku / PythonAnywhere)
 Add product image upload instead of URL
 Implement order management system
 Add role-based permissions (Admin / Manager)
