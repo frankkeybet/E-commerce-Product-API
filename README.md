@@ -117,7 +117,7 @@ Product listing is paginated to improve performance when handling large datasets
 
 Example:
 
-GET /product/?page=2
+GET /product/?page_size=1
 
 ## 👤 User Management
 
